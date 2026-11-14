@@ -4,66 +4,354 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>First Aid - Pronto Soccorso</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --surface: #131b2e;
+            --surface-hover: #1e293b;
+            --border: #2a364f;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent: #06b6d4;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 16px;
+        }
+
+        header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 4px 0;
+            font-weight: 700;
+            background: linear-gradient(to right, #60a5fa, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-main);
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .search-bar:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            background: var(--surface-hover);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .card h3 {
+            margin: 0 0 4px 0;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .view-section {
+            display: none;
+            background: var(--surface);
+            border-radius: 14px;
+            padding: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        .back-btn {
+            background: var(--border);
+            border: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Calcolatori */
+        .calc-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .calc-item-btn {
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 8px;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .calc-item-btn:hover {
+            border-color: var(--primary);
+            background: var(--surface-hover);
+        }
+
+        .score-active-box {
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+
+        .score-row {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .score-row label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .score-row select, .score-row input {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .result-display {
+            margin-top: 16px;
+            padding: 12px;
+            background: var(--surface);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* EGA */
+        .ega-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        .btn-action {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-action:hover {
+            background: var(--primary-hover);
+        }
+
+        .ega-report {
+            margin-top: 16px;
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .ega-report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        .btn-copy {
+            background: var(--surface-hover);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .ega-textarea {
+            width: 100%;
+            height: 140px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-main);
+            padding: 10px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        /* Rianimazione */
+        .resus-container { background: var(--bg-color); padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
+        .cycle-banner { background: var(--surface); padding: 16px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border: 1px solid var(--border); }
+        .big-timer { font-size: 2.2rem; font-weight: 800; color: var(--accent); }
+        .rhythm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+        .btn-defib { background: var(--danger); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; font-size: 0.85rem; }
+        .btn-non-defib { background: var(--surface-hover); color: white; border: 1px solid var(--border); padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; font-size: 0.85rem; }
+        .drugs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .drug-card { background: var(--surface); border: 1px solid var(--border); padding: 12px; border-radius: 8px; cursor: pointer; }
+    </style>
 </head>
 <body>
 
     <header>
         <h1>First Aid</h1>
-        <p class="subtitle">Algoritmi, calcolatori e numeri utili per sopravvivere al Pronto Soccorso di Prato[span_0](start_span)[span_0](end_span).</p>
+        <p class="subtitle">Algoritmi, calcolatori e numeri utili per sopravvivere al Pronto Soccorso di Prato.</p>
     </header>
 
     <div class="search-container">
-        <input type="text" class="search-bar" placeholder="🔍 Cerca score, protocollo o strumento..." id="global-search" oninput="filtraCard(this.value)">
+        <input type="text" class="search-bar" placeholder="Cerca score, protocollo o strumento..." id="global-search" oninput="filtraCard(this.value)">
     </div>
 
-    <!-- VISTA PRINCIPALE: Griglia 16 Sezioni -->
+    <!-- VISTA PRINCIPALE -->
     <div id="main-grid-view" class="grid-container">
-        <div class="card" onclick="apriSezione('rubrica')"><h3>Rubrica <span>📞</span></h3><p>Numeri interni ed esterni[span_1](start_span)[span_1](end_span)</p></div>
-        <div class="card" onclick="apriSezione('pdta')"><h3>PDTA <span>📋</span></h3><p>Percorsi, linee guida, algoritmi[span_2](start_span)[span_2](end_span)</p></div>
-        <div class="card" onclick="apriSezione('calcolatori')"><h3>Calcolatori <span>🧮</span></h3><p>Score, clearance, elettroliti[span_3](start_span)[span_3](end_span)</p></div>
-        <div class="card" onclick="apriSezione('antibiotici')"><h3>Antibiotici <span>💊</span></h3><p>Empirica toscana, fiale, rene[span_4](start_span)[span_4](end_span)</p></div>
-        <div class="card" onclick="apriSezione('procedure')"><h3>Procedure <span>📐</span></h3><p>Passaggi e schemi disegnati[span_5](start_span)[span_5](end_span)</p></div>
-        <div class="card" onclick="apriSezione('rianimazione')"><h3>Rianimazione <span>⚡</span></h3><p>Arrest coach e algoritmi AHA[span_6](start_span)[span_6](end_span)</p></div>
-        <div class="card" onclick="apriSezione('egaview')"><h3>Analisi EGA <span>🩸</span></h3><p>pH, compenso, anion gap, P/F[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)</p></div>
-        <div class="card" onclick="apriSezione('sedazione')"><h3>Sedazione <span>💉</span></h3><p>Schemi per 70 kg[span_9](start_span)[span_9](end_span)</p></div>
-        <div class="card" onclick="apriSezione('cartella')"><h3>Cartella <span>📝</span></h3><p>Anamnesi ed EO per sintomo[span_10](start_span)[span_10](end_span)</p></div>
-        <div class="card" onclick="apriSezione('dimissione')"><h3>Dimissione <span>📤</span></h3><p>Testi pronti da adattare[span_11](start_span)[span_11](end_span)</p></div>
-        <div class="card" onclick="apriSezione('moduli')"><h3>Moduli <span>📄</span></h3><p>Da compilare e stampare[span_12](start_span)[span_12](end_span)</p></div>
-        <div class="card" onclick="apriSezione('percorsi')"><h3>Percorsi <span>⚖️</span></h3><p>Referto, INAIL, decesso, TSO, Codice Rosa[span_13](start_span)[span_13](end_span)</p></div>
-        <div class="card" onclick="apriSezione('docs')"><h3>Docs ASL <span>📁</span></h3><p>Protocolli e moduli aziendali originali[span_14](start_span)[span_14](end_span)</p></div>
-        <div class="card" onclick="apriSezione('formazione')"><h3>Formazione <span>📚</span></h3><p>Regole, calendario, programmi[span_15](start_span)[span_15](end_span)</p></div>
-        <div class="card" onclick="apriSezione('turni')"><h3>Turni 🔒 <span>🕒</span></h3><p>Chi c'è oggi, i miei turni[span_16](start_span)[span_16](end_span)</p></div>
-        <div class="card" onclick="apriSezione('riunioni')"><h3>Riunioni 🔒 <span>👥</span></h3><p>Verbali e comunicazioni[span_17](start_span)[span_17](end_span)</p></div>
+        <div class="card" onclick="apriSezione('rubrica')"><h3>Rubrica 📞</h3><p>Numeri interni ed esterni</p></div>
+        <div class="card" onclick="apriSezione('pdta')"><h3>PDTA 📋</h3><p>Percorsi, linee guida, algoritmi</p></div>
+        <div class="card" onclick="apriSezione('calcolatori')"><h3>Calcolatori 🧮</h3><p>Score, clearance, elettroliti</p></div>
+        <div class="card" onclick="apriSezione('antibiotici')"><h3>Antibiotici 💊</h3><p>Empirica toscana, fiale, rene</p></div>
+        <div class="card" onclick="apriSezione('procedure')"><h3>Procedure 📐</h3><p>Passaggi e schemi disegnati</p></div>
+        <div class="card" onclick="apriSezione('rianimazione')"><h3>Rianimazione ⚡</h3><p>Arrest coach e algoritmi AHA</p></div>
+        <div class="card" onclick="apriSezione('egaview')"><h3>Analisi EGA 🩸</h3><p>pH, compenso, anion gap, P/F</p></div>
+        <div class="card" onclick="apriSezione('sedazione')"><h3>Sedazione 💉</h3><p>Schemi per 70 kg</p></div>
+        <div class="card" onclick="apriSezione('cartella')"><h3>Cartella 📝</h3><p>Anamnesi ed EO per sintomo</p></div>
+        <div class="card" onclick="apriSezione('dimissione')"><h3>Dimissione 📤</h3><p>Testi pronti da adattare</p></div>
+        <div class="card" onclick="apriSezione('moduli')"><h3>Moduli 📄</h3><p>Da compilare e stampare</p></div>
+        <div class="card" onclick="apriSezione('percorsi')"><h3>Percorsi ⚖️</h3><p>Referto, INAIL, decesso, TSO, Codice Rosa</p></div>
+        <div class="card" onclick="apriSezione('docs')"><h3>Docs ASL 📁</h3><p>Protocolli e moduli aziendali originali</p></div>
+        <div class="card" onclick="apriSezione('formazione')"><h3>Formazione 📚</h3><p>Regole, calendario, programmi</p></div>
+        <div class="card" onclick="apriSezione('turni')"><h3>Turni 🔒 🕒</h3><p>Chi c'è oggi, i miei turni</p></div>
+        <div class="card" onclick="apriSezione('riunioni')"><h3>Riunioni 🔒 👥</h3><p>Verbali e comunicazioni</p></div>
     </div>
 
-    <!-- SOTTO-SCHERMATA: Calcolatori -->
+    <!-- CALCOLATORI -->
     <div id="view-calcolatori" class="view-section">
         <button class="back-btn" onclick="chiudiSezioni()">← Indietro</button>
         <h2>Calcolatori & Score Clinici</h2>
-        <p class="subtitle" style="margin-bottom: 20px;">Seleziona lo score o la formula[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span).</p>
+        <p class="subtitle" style="margin-bottom: 16px;">Seleziona lo score desiderato.</p>
         <div class="calc-list">
-            <button class="calc-item-btn" onclick="caricaScore('heart')">HEART Score (Dolore Toracico)[span_20](start_span)[span_20](end_span)</button>
-            <button class="calc-item-btn" onclick="caricaScore('curb65')">CURB-65 (Polmonite)[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)</button>
-            <button class="calc-item-btn" onclick="caricaScore('gcs')">Glasgow Coma Scale (GCS)[span_23](start_span)[span_23](end_span)[span_24](start_span)[span_24](end_span)</button>
-            <button class="calc-item-btn" onclick="caricaScore('hasbled')">HAS-BLED (Rischio emorragico)[span_25](start_span)[span_25](end_span)</button>
+            <button class="calc-item-btn" onclick="caricaScore('heart')">HEART Score (Dolore Toracico)</button>
+            <button class="calc-item-btn" onclick="caricaScore('curb65')">CURB-65 (Polmonite Comunitaria)</button>
+            <button class="calc-item-btn" onclick="caricaScore('gcs')">Glasgow Coma Scale (GCS)</button>
+            <button class="calc-item-btn" onclick="caricaScore('hasbled')">HAS-BLED (Rischio emorragico OAC)</button>
         </div>
         <div id="score-container" style="display:none;" class="score-active-box">
-            <h3 id="score-title" style="margin-top:0; color:var(--accent);"></h3>
-            <p id="score-desc" style="color:var(--text-muted); font-size:0.85rem; margin-bottom:15px;"></p>
+            <h3 id="score-title" style="margin-top:0; color:var(--accent); font-size: 1rem;"></h3>
+            <p id="score-desc" style="color:var(--text-muted); font-size:0.8rem; margin-bottom:12px;"></p>
             <div id="score-inputs"></div>
             <div class="result-display">
-                <div style="font-size: 0.85rem; color: var(--text-muted);">Punteggio Totale: <strong id="score-total" style="font-size: 1.2rem; color: var(--text-main);">0</strong></div>
-                <div id="score-interpretation" style="margin-top: 6px; font-weight: 600; color: var(--primary);">Seleziona i parametri.</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Punteggio Totale: <strong id="score-total" style="font-size: 1.1rem; color: var(--text-main);">0</strong></div>
+                <div id="score-interpretation" style="margin-top: 4px; font-weight: 600; color: var(--primary); font-size: 0.85rem;">Seleziona i parametri.</div>
             </div>
         </div>
     </div>
 
-    <!-- SOTTO-SCHERMATA: Analisi EGA -->
+    <!-- ANALISI EGA -->
     <div id="view-egaview" class="view-section">
         <button class="back-btn" onclick="chiudiSezioni()">← Indietro</button>
         <h2>Analisi EGA & Elettroliti</h2>
-        <p class="subtitle" style="margin-bottom: 20px;">Algoritmo strutturato: disturbo primario, compenso, anion gap e delta ratio[span_26](start_span)[span_26](end_span)[span_27](start_span)[span_27](end_span).</p>
+        <p class="subtitle" style="margin-bottom: 16px;">Algoritmo strutturato: disturbo primario, compenso, anion gap e delta ratio.</p>
         
         <div class="ega-grid">
             <div class="input-group"><label>pH</label><input type="number" id="ega-ph" step="0.01" placeholder="7.35 - 7.45"></div>
@@ -77,70 +365,252 @@
             <div class="input-group"><label>FiO₂ (%)</label><input type="number" id="ega-fio2" step="1" placeholder="es. 21 o 0.21"></div>
         </div>
 
-        <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-            <input type="checkbox" id="ega-usak" style="width: 18px; height: 18px;">
-            <label for="ega-usak" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">Includi K⁺ nel calcolo dell'Anion Gap ($Na^+ + K^+ - Cl^- - HCO_3^-$)</label>
+        <div style="margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="ega-usak" style="width: 16px; height: 16px;">
+            <label for="ega-usak" style="font-size: 0.8rem; color: var(--text-muted); cursor: pointer;">Includi K⁺ nel calcolo Anion Gap</label>
         </div>
 
         <button class="btn-action" onclick="avviaAnalisiEGA()">Genera Referto EGA</button>
 
         <div id="ega-report" class="ega-report" style="display:none;">
             <div class="ega-report-header">
-                <h4>Referto Testuale Pronto per la Cartella</h4>
-                <button class="btn-copy" onclick="copiaTestoEGA()">📋 Copia Testo</button>
+                <h4 style="margin:0; font-size:0.9rem; color:var(--accent);">Referto Testuale</h4>
+                <button class="btn-copy" onclick="copiaTestoEGA()">📋 Copia</button>
             </div>
             <textarea id="ega-textarea" class="ega-textarea" readonly></textarea>
         </div>
     </div>
 
-    <!-- SOTTO-SCHERMATA: Rianimazione -->
+    <!-- RIANIMAZIONE -->
     <div id="view-rianimazione" class="view-section">
         <button class="back-btn" onclick="chiudiSezioni()">← Indietro</button>
         <div class="resus-container">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 0.9rem; color: var(--text-muted);">
-                <span id="ritmo-status">RITMO NON ANCORA ANALIZZATO</span>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-muted);">
+                <span id="ritmo-status">RITMO NON ANALIZZATO</span>
                 <span id="tot-timer" style="font-weight:bold; color:var(--text-main);">TOT 00:00</span>
             </div>
             <div class="cycle-banner">
                 <div>
-                    <h3 style="margin:0 0 4px 0; font-size: 1.2rem;">Compressioni 30 : 2</h3>
-                    <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">100–120/min · Profondità 5–6 cm</p>
+                    <h3 style="margin:0 0 2px 0; font-size: 1rem;">Compressioni 30 : 2</h3>
+                    <p style="margin:0; font-size:0.75rem; color:var(--text-muted);">100–120/min · 5–6 cm</p>
                 </div>
                 <div style="text-align: right;">
-                    <span style="font-size:0.7rem; color:var(--text-muted); text-transform: uppercase;">Prossima analisi tra</span>
+                    <span style="font-size:0.65rem; color:var(--text-muted); text-transform: uppercase;">Prossima analisi</span>
                     <div id="cycle-timer" class="big-timer">02:00</div>
                 </div>
             </div>
             <div class="rhythm-grid">
-                <button class="btn-defib" onclick="resus.registraShock()">⚡ DEFIBRILLABILE<br><small style="font-weight:normal; opacity:0.8;">FV / TV senza polso</small></button>
-                <button class="btn-non-defib" onclick="resus.registraEvento('Non defibrillabile')">🛑 NON DEFIBRILLABILE<br><small style="font-weight:normal; opacity:0.8;">PEA / Asistolia</small></button>
+                <button class="btn-defib" onclick="resus.registraShock()">⚡ DEFIBRILLABILE<br><small style="font-weight:normal; opacity:0.8;">FV / TV</small></button>
+                <button class="btn-non-defib" onclick="resus.registraEvento('Non defibrillabile')">🛑 NON DEFIB.<br><small style="font-weight:normal; opacity:0.8;">PEA / Asistolia</small></button>
             </div>
             <div class="drugs-grid">
                 <div class="drug-card" onclick="resus.somministraAdrenalina()">
-                    <h4 style="margin:0 0 4px 0; font-size: 0.95rem;">ADRENALINA 1 MG</h4>
-                    <p style="margin:0; font-size:0.75rem; color:var(--text-muted);">Ogni 3-5 min</p>
-                    <span id="adren-counter" style="font-weight:bold; color:var(--accent); display:inline-block; margin-top:6px;">0 mg</span>
+                    <h4 style="margin:0 0 2px 0; font-size: 0.85rem;">ADRENALINA 1 MG</h4>
+                    <p style="margin:0; font-size:0.7rem; color:var(--text-muted);">Ogni 3-5 min</p>
+                    <span id="adren-counter" style="font-weight:bold; color:var(--accent); display:inline-block; margin-top:4px;">0 mg</span>
                 </div>
                 <div class="drug-card" onclick="resus.somministraAmiodarone(300)">
-                    <h4 style="margin:0 0 4px 0; font-size: 0.95rem;">AMIODARONE</h4>
-                    <p style="margin:0; font-size:0.75rem; color:var(--text-muted);">300 mg dopo 3° shock</p>
-                    <span id="amio-counter" style="font-weight:bold; color:var(--accent); display:inline-block; margin-top:6px;">0 mg</span>
+                    <h4 style="margin:0 0 2px 0; font-size: 0.85rem;">AMIODARONE</h4>
+                    <p style="margin:0; font-size:0.7rem; color:var(--text-muted);">300 mg al 3° shock</p>
+                    <span id="amio-counter" style="font-weight:bold; color:var(--accent); display:inline-block; margin-top:4px;">0 mg</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SOTTO-SCHERMATA Generica -->
+    <!-- SEZIONE GENERICA -->
     <div id="view-generica" class="view-section">
         <button class="back-btn" onclick="chiudiSezioni()">← Indietro</button>
         <h2 id="gen-title">Sezione</h2>
-        <p id="gen-desc" style="color: var(--text-muted);">Modulo in fase di configurazione.</p>
+        <p id="gen-desc" style="color: var(--text-muted); font-size: 0.9rem;">Contenuti in fase di configurazione.</p>
     </div>
 
-    <!-- Collegamento agli script esterni -->
-    <script src="ega.js"></script>
-    <script src="calculators-engine.js"></script>
-    <script src="resus.js"></script>
-    <script src="app.js"></script>
+    <script>
+        function apriSezione(id) {
+            document.getElementById('main-grid-view').style.display = 'none';
+            document.querySelector('.search-container').style.display = 'none';
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+
+            if (id === 'rianimazione') {
+                document.getElementById('view-rianimazione').classList.add('active');
+                resus.start();
+            } else if (id === 'egaview') {
+                document.getElementById('view-egaview').classList.add('active');
+            } else if (id === 'calcolatori') {
+                document.getElementById('view-calcolatori').classList.add('active');
+            } else {
+                document.getElementById('view-generica').classList.add('active');
+                document.getElementById('gen-title').innerText = id.toUpperCase();
+                document.getElementById('gen-desc').innerText = "Protocolli e schemi specifici in caricamento.";
+            }
+        }
+
+        function chiudiSezioni() {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('main-grid-view').style.display = 'grid';
+            document.querySelector('.search-container').style.display = 'block';
+            resus.pause();
+        }
+
+        function filtraCard(query) {
+            const cards = document.querySelectorAll('#main-grid-view .card');
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query.toLowerCase()) ? 'block' : 'none';
+            });
+        }
+
+        // Calcolatori Clinici
+        const databaseScores = {
+            heart: {
+                title: "HEART Score (Dolore Toracico)",
+                desc: "Stratificazione del rischio nel dolore toracico",
+                items: [
+                    { label: "Anamnesi", opts: [{v:0, t:"Non specifico (0)"}, {v:1, t:"Moderatamente sospetto (1)"}, {v:2, t:"Altamente sospetto (2)"}] },
+                    { label: "ECG", opts: [{v:0, t:"Normale (0)"}, {v:1, t:"Anomalia ST/T non specifica (1)"}, {v:2, t:"Slittamento ST significativo (2)"}] },
+                    { label: "Età", opts: [{v:0, t:"< 45 anni (0)"}, {v:1, t:"45 - 64 anni (1)"}, {v:2, t:">= 65 anni (2)"}] },
+                    { label: "Fattori di rischio", opts: [{v:0, t:"Nessuno (0)"}, {v:1, t:"1-2 fattori (1)"}, {v:2, t:">= 3 fattori o anamnesi nota (2)"}] },
+                    { label: "Troponina", opts: [{v:0, t:"<= limite norma (0)"}, {v:1, t:"1-3 volte la norma (1)"}, {v:2, t:"> 3 volte la norma (2)"}] }
+                ],
+                eval: (tot) => tot <= 3 ? "Rischio basso (MACE 0.9-1.7%) - Dimissione/osservazione" : tot <= 6 ? "Rischio moderato - Valutare ricovero" : "Rischio alto - Consulenza cardiologica urgente"
+            },
+            curb65: {
+                title: "CURB-65 (Polmonite Comunitaria)",
+                desc: "Valutazione gravità e sede di cura",
+                items: [
+                    { label: "Confusione mentale", opts: [{v:0, t:"Assente (0)"}, {v:1, t:"Presente (1)"}] },
+                    { label: "Urea sierica > 7 mmol/L", opts: [{v:0, t:"No (0)"}, {v:1, t:"Sì (1)"}] },
+                    { label: "FR >= 30/min", opts: [{v:0, t:"No (0)"}, {v:1, t:"Sì (1)"}] },
+                    { label: "PA Sistolica < 90 o Diastolica <= 60", opts: [{v:0, t:"No (0)"}, {v:1, t:"Sì (1)"}] },
+                    { label: "Età >= 65 anni", opts: [{v:0, t:"No (0)"}, {v:1, t:"Sì (1)"}] }
+                ],
+                eval: (tot) => tot <= 1 ? "Rischio basso - Valutare domicilio" : tot == 2 ? "Rischio moderato - Valutare ricovero" : "Rischio alto - Valutare subintensiva/intensiva"
+            }
+        };
+
+        function caricaScore(key) {
+            const cfg = databaseScores[key];
+            if(!cfg) return alert("Score in caricamento.");
+            document.getElementById('score-title').innerText = cfg.title;
+            document.getElementById('score-desc').innerText = cfg.desc;
+            
+            let html = "";
+            cfg.items.forEach((it, idx) => {
+                html += `<div class="score-row"><label>${it.label}</label><select id="sc-opt-${idx}" onchange="calcolaScoreCorrente('${key}')">`;
+                it.opts.forEach(o => { html += `<option value="${o.v}">${o.t}</option>`; });
+                html += `</select></div>`;
+            });
+            document.getElementById('score-inputs').innerHTML = html;
+            document.getElementById('score-container').style.display = 'block';
+            calcolaScoreCorrente(key);
+        }
+
+        function calcolaScoreCorrente(key) {
+            const cfg = databaseScores[key];
+            let tot = 0;
+            cfg.items.forEach((it, idx) => {
+                const sel = document.getElementById(`sc-opt-${idx}`);
+                if(sel) tot += parseInt(sel.value) || 0;
+            });
+            document.getElementById('score-total').innerText = tot;
+            document.getElementById('score-interpretation').innerText = cfg.eval(tot);
+        }
+
+        // Motore EGA
+        function avviaAnalisiEGA() {
+            const ph = parseFloat(document.getElementById('ega-ph').value);
+            const paco2 = parseFloat(document.getElementById('ega-paco2').value);
+            const hco3 = parseFloat(document.getElementById('ega-hco3').value);
+            const na = parseFloat(document.getElementById('ega-na').value);
+            const cl = parseFloat(document.getElementById('ega-cl').value);
+            const k = parseFloat(document.getElementById('ega-k').value) || 0;
+            const lat = parseFloat(document.getElementById('ega-lat').value);
+            const pao2 = parseFloat(document.getElementById('ega-pao2').value);
+            let fio2 = parseFloat(document.getElementById('ega-fio2').value);
+            const usaK = document.getElementById('ega-usak').checked;
+
+            if ([ph, paco2, hco3].filter(v => !isNaN(v)).length < 2) {
+                alert("Inserisci almeno due parametri tra pH, PaCO₂ e HCO₃⁻.");
+                return;
+            }
+
+            let reportLines = [];
+            reportLines.push("=== REFERTO ANALISI EMOGASANALITICA ===");
+            reportLines.push(`Valori -> pH: ${isNaN(ph)?'--':ph}, PaCO2: ${isNaN(paco2)?'--':paco2} mmHg, HCO3: ${isNaN(hco3)?'--':hco3} mmol/L`);
+            reportLines.push("");
+
+            let primario = "";
+            if (ph < 7.35) {
+                primario = (paco2 > 45) ? "Acidosi Respiratoria" : (hco3 < 22) ? "Acidosi Metabolica" : "Acidemia (Mista)";
+            } else if (ph > 7.45) {
+                primario = (paco2 < 35) ? "Alcalosi Respiratoria" : (hco3 > 26) ? "Alcalosi Metabolica" : "Alcalemia (Mista)";
+            } else {
+                primario = "pH Normale (possibile disturbo misto o compensato)";
+            }
+            reportLines.push(`• Disturbo Primario: ${primario}`);
+
+            if (primario.includes("Acidosi Metabolica") && !isNaN(paco2) && !isNaN(hco3)) {
+                let paco2Attesa = (1.5 * hco3) + 8;
+                let diff = paco2 - paco2Attesa;
+                let compenso = Math.abs(diff) <= 2 ? "Compenso respiratorio adeguato." : diff > 2 ? "Sovrapposta Acidosi Respiratoria." : "Sovrapposta Alcalosi Respiratoria.";
+                reportLines.push(`• Winter: PaCO2 attesa = ${paco2Attesa.toFixed(1)} mmHg (±2). Rilevata: ${paco2} mmHg. (${compenso})`);
+            }
+
+            if (!isNaN(na) && !isNaN(cl) && !isNaN(hco3)) {
+                let ag = usaK ? (na + k) - (cl + hco3) : na - (cl + hco3);
+                let agNorm = usaK ? 16 : 12;
+                let evalAG = ag > (agNorm + 2) ? "Anion Gap ELEVATO" : ag < (agNorm - 2) ? "Anion Gap ridotto" : "Anion Gap Normale";
+                reportLines.push(`• Anion Gap: ${ag.toFixed(1)} mmol/L -> ${evalAG}`);
+            }
+
+            if (!isNaN(lat)) {
+                reportLines.push(`• Lattati: ${lat} mmol/L (${lat > 2.0 ? "Iperlattatemia" : "Nella norma"})`);
+            }
+
+            if (!isNaN(pao2) && !isNaN(fio2)) {
+                let f = fio2 > 1 ? fio2 / 100 : fio2;
+                let pf = pao2 / f;
+                reportLines.push(`• Rapporto P/F: ${pf.toFixed(0)} (${pf > 300 ? "Normale/Lieve" : "Moderata/Grave ipossiemia"})`);
+            }
+
+            document.getElementById('ega-textarea').value = reportLines.join('\n');
+            document.getElementById('ega-report').style.display = 'block';
+        }
+
+        function copiaTestoEGA() {
+            const textarea = document.getElementById('ega-textarea');
+            textarea.select();
+            document.execCommand('copy');
+            alert("Referto EGA copiato negli appunti!");
+        }
+
+        // Arrest Coach
+        class ResusCoachMini {
+            constructor() {
+                this.sec = 0; this.cycle = 120; this.timer = null; this.adren = 0;
+            }
+            start() {
+                if (this.timer) return;
+                this.timer = setInterval(() => {
+                    this.sec++;
+                    if (this.cycle > 0) this.cycle--; else this.cycle = 120;
+                    const m = Math.floor(this.sec / 60).toString().padStart(2, '0');
+                    const s = (this.sec % 60).toString().padStart(2, '0');
+                    const cm = Math.floor(this.cycle / 60).toString().padStart(2, '0');
+                    const cs = (this.cycle % 60).toString().padStart(2, '0');
+                    
+                    const elTot = document.getElementById('tot-timer');
+                    const elCy = document.getElementById('cycle-timer');
+                    if(elTot) elTot.innerText = `TOT ${m}:${s}`;
+                    if(elCy) elCy.innerText = `${cm}:${cs}`;
+                }, 1000);
+            }
+            pause() { clearInterval(this.timer); this.timer = null; }
+            somministraAdrenalina() { this.adren++; document.getElementById('adren-counter').innerText = `${this.adren} mg`; }
+            registraShock() { alert("Shock registrato!"); }
+            registraEvento(msg) { alert("Evento registrato: " + msg); }
+        }
+        const resus = new ResusCoachMini();
+    </script>
 </body>
 </html>
