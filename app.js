@@ -1,6 +1,3 @@
-/**
- * Logica principale dell'applicazione
- */
 function apriSezione(id) {
     document.getElementById('main-grid-view').style.display = 'none';
     document.querySelector('.search-container').style.display = 'none';
@@ -16,7 +13,7 @@ function apriSezione(id) {
     } else {
         document.getElementById('view-generica').classList.add('active');
         document.getElementById('gen-title').innerText = id.toUpperCase();
-        document.getElementById('gen-desc').innerText = "Contenuti strutturati e protocolli specifici per la sezione.";
+        document.getElementById('gen-desc').innerText = "Protocolli e schemi specifici in caricamento.";
     }
 }
 
@@ -50,7 +47,7 @@ function avviaAnalisiEGA() {
     };
 
     if ([input.ph, input.paco2, input.hco3].filter(v => !isNaN(v)).length < 2) {
-        alert("Inserisci almeno due parametri tra pH, PaCO₂ e HCO₃⁻[span_35](start_span)[span_35](end_span).");
+        alert("Inserisci almeno due parametri tra pH, PaCO₂ e HCO₃⁻.");
         return;
     }
 
