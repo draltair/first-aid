@@ -1,6 +1,3 @@
-/**
- * Modulo Arrest Coach per Rianimazione
- */
 class ResusCoachMini {
     constructor() {
         this.sec = 0; this.cycle = 120; this.timer = null; this.adren = 0;
