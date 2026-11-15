@@ -62,3 +62,11 @@ function copiaTestoEGA() {
     document.execCommand('copy');
     alert("Referto EGA copiato negli appunti!");
 }
+function copiaResusLog() {
+    const logItems = resus.state.eventiLog.map(ev => `[${ev.time}] ${ev.text}`).join('\n');
+    const reportCompleto = `=== REPORT RIANIMAZIONE ACLS ===\nDurata Totale: ${resus.formatTime(resus.totalSeconds)}\nShock Totali: ${resus.state.shockCount}\nAdrenalina: ${resus.state.adrenalinaCount} mg\nAmiodarone: ${resus.state.amiodaroneTotal} mg\n\nCRONOLOGIA EVENTI:\n${logItems}`;
+    
+    navigator.clipboard.writeText(reportCompleto).then(() => {
+        alert("Report di rianimazione copiato negli appunti!");
+    });
+}
