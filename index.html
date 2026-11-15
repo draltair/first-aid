@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    <!-- SOTTO-SCHERMATA: Rianimazione Resus PRO -->
+    <!-- SOTTO-SCHERMATA: Rianimazione Resus PRO con Flowchart Indicator -->
     <div id="view-rianimazione" class="view-section">
         <button class="back-btn" onclick="chiudiSezioni()">← Indietro</button>
         <div class="resus-container">
@@ -108,6 +108,14 @@
                     <span style="font-size:0.65rem; color:var(--text-muted); text-transform: uppercase;">Prossimo controllo tra</span>
                     <div id="cycle-timer" class="big-timer">02:00</div>
                 </div>
+            </div>
+
+            <!-- ➔ NUOVO: Flowchart / Step Progress Bar del Protocollo ACLS -->
+            <div id="acls-flowchart-bar" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 16px; text-align: center;">
+                <div id="step-cpr" style="background: var(--primary); color: white; padding: 8px 4px; border-radius: 6px; font-size: 0.7rem; font-weight: bold;">1. RCP 2 min</div>
+                <div id="step-analisi" style="background: var(--surface-hover); color: var(--text-muted); padding: 8px 4px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; border: 1px solid var(--border);">2. Analisi Ritmo</div>
+                <div id="step-shock" style="background: var(--surface-hover); color: var(--text-muted); padding: 8px 4px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; border: 1px solid var(--border);">3. Shock / No Shock</div>
+                <div id="step-farmaci" style="background: var(--surface-hover); color: var(--text-muted); padding: 8px 4px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; border: 1px solid var(--border);">4. Adrenalina / Farmaci</div>
             </div>
 
             <!-- Selezione Ritmo -->
@@ -132,7 +140,7 @@
 
             <!-- Interventi Rapidi e Cause 4H 4T -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
-                <button class="calc-item-btn" onclick="resus.registrataEvento('Intubazione / Dispositivo sovraglottico posizionato')"> airway IOT / SGA</button>
+                <button class="calc-item-btn" onclick="resus.registrataEvento('Intubazione / Dispositivo sovraglottico posizionato')">🫁 IOT / SGA</button>
                 <button class="calc-item-btn" onclick="resus.registrataEvento('Accesso Vascolare / IO ottenuto')">💉 Accesso IV / IO</button>
                 <button class="calc-item-btn" onclick="resus.registrataEvento('Ecografia FAST / FOCUS eseguita')">🔍 Ecografia</button>
                 <button class="calc-item-btn" onclick="alert('4H: Ipossia, Ipovolemia, Ipo/Iperkaliemia, Ipotermia\n4T: Trombosi coronarica, Trombosi polmonare, Tamponamento, Pneumotorace iperteso, Tossici')">⚠️ Cause 4H • 4T</button>
