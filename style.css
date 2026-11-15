@@ -17,18 +17,18 @@ body {
     background-color: var(--bg-color);
     color: var(--text-main);
     margin: 0;
-    padding: 20px;
+    padding: 16px;
 }
 
 header {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     border-bottom: 1px solid var(--border);
-    padding-bottom: 16px;
+    padding-bottom: 12px;
 }
 
 h1 {
-    font-size: 1.75rem;
-    margin: 0 0 6px 0;
+    font-size: 1.5rem;
+    margin: 0 0 4px 0;
     font-weight: 700;
     background: linear-gradient(to right, #60a5fa, #06b6d4);
     -webkit-background-clip: text;
@@ -37,19 +37,18 @@ h1 {
 
 p.subtitle {
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     margin: 0;
 }
 
 .search-container {
-    position: relative;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .search-bar {
     width: 100%;
-    padding: 14px 18px;
-    font-size: 1rem;
+    padding: 12px 16px;
+    font-size: 0.95rem;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -65,29 +64,28 @@ p.subtitle {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
 }
 
 .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
+    border-radius: 12px;
+    padding: 14px;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
 }
 
 .card:hover {
     background: var(--surface-hover);
     border-color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
 }
 
 .card h3 {
-    margin: 0 0 6px 0;
-    font-size: 1.05rem;
+    margin: 0 0 4px 0;
+    font-size: 0.95rem;
     color: var(--text-main);
     display: flex;
     justify-content: space-between;
@@ -96,16 +94,16 @@ p.subtitle {
 
 .card p {
     margin: 0;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
-    line-height: 1.4;
+    line-height: 1.3;
 }
 
 .view-section {
     display: none;
     background: var(--surface);
-    border-radius: 16px;
-    padding: 24px;
+    border-radius: 14px;
+    padding: 20px;
     border: 1px solid var(--border);
 }
 
@@ -118,11 +116,11 @@ p.subtitle {
     border: none;
     color: var(--text-main);
     font-weight: 600;
-    font-size: 0.85rem;
-    padding: 8px 14px;
+    font-size: 0.8rem;
+    padding: 8px 12px;
     border-radius: 8px;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .back-btn:hover {
@@ -131,21 +129,21 @@ p.subtitle {
 
 .calc-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 10px;
-    margin-bottom: 20px;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .calc-item-btn {
     background: var(--bg-color);
     border: 1px solid var(--border);
-    padding: 14px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 8px;
     color: var(--text-main);
     text-align: left;
     cursor: pointer;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .calc-item-btn:hover {
@@ -156,19 +154,20 @@ p.subtitle {
 .score-active-box {
     background: var(--bg-color);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 12px;
 }
 
 .score-row {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
 }
 
 .score-row label {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     font-weight: 600;
 }
@@ -177,14 +176,14 @@ p.subtitle {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 10px;
+    padding: 8px;
     color: var(--text-main);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .result-display {
-    margin-top: 20px;
-    padding: 14px;
+    margin-top: 16px;
+    padding: 12px;
     background: var(--surface);
     border-radius: 8px;
     border-left: 4px solid var(--primary);
@@ -192,9 +191,9 @@ p.subtitle {
 
 .ega-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    margin-bottom: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
 .input-group {
@@ -213,17 +212,17 @@ p.subtitle {
     background: var(--bg-color);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 10px;
+    padding: 8px;
     color: var(--text-main);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .btn-action {
     background: var(--primary);
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
     width: 100%;
@@ -234,56 +233,52 @@ p.subtitle {
 }
 
 .ega-report {
-    margin-top: 24px;
+    margin-top: 16px;
     background: var(--bg-color);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 16px;
 }
 
 .ega-report-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     border-bottom: 1px solid var(--border);
-    padding-bottom: 8px;
+    padding-bottom: 6px;
 }
 
 .btn-copy {
     background: var(--surface-hover);
     border: 1px solid var(--border);
     color: var(--text-main);
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 6px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     cursor: pointer;
     font-weight: 600;
 }
 
-.btn-copy:hover {
-    background: var(--primary);
-}
-
 .ega-textarea {
     width: 100%;
-    height: 160px;
+    height: 140px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 8px;
     color: var(--text-main);
-    padding: 12px;
+    padding: 10px;
     font-family: monospace;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     box-sizing: border-box;
     resize: vertical;
 }
 
-.resus-container { background: var(--bg-color); padding: 20px; border-radius: 14px; border: 1px solid var(--border); }
-.cycle-banner { background: var(--surface); padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border: 1px solid var(--border); }
-.big-timer { font-size: 2.75rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
-.rhythm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-.btn-defib { background: var(--danger); color: white; border: none; padding: 16px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: left; }
-.btn-non-defib { background: var(--surface-hover); color: white; border: 1px solid var(--border); padding: 16px; border-radius: 10px; font-weight: bold; cursor: pointer; text-align: left; }
-.drugs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.drug-card { background: var(--surface); border: 1px solid var(--border); padding: 14px; border-radius: 10px; cursor: pointer; }
+.resus-container { background: var(--bg-color); padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
+.cycle-banner { background: var(--surface); padding: 16px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border: 1px solid var(--border); }
+.big-timer { font-size: 2.2rem; font-weight: 800; color: var(--accent); }
+.rhythm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.btn-defib { background: var(--danger); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; font-size: 0.85rem; }
+.btn-non-defib { background: var(--surface-hover); color: white; border: 1px solid var(--border); padding: 14px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; font-size: 0.85rem; }
+.drugs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.drug-card { background: var(--surface); border: 1px solid var(--border); padding: 12px; border-radius: 8px; cursor: pointer; }
