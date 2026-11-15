@@ -1,13 +1,11 @@
 /**
- * Modulo Resus PRO / Arrest Coach Avanzato
- * Gestione cicli, farmaci ACLS, timer Adrenalina e Log Eventi
+ * Modulo Resus PRO con Flowchart Dinamica degli Step ACLS
  */
-
 class ResusProEngine {
     constructor() {
         this.totalSeconds = 0;
         this.cycleSeconds = 120; // 2 minuti per ciclo RCP
-        this.adrenTimerSeconds = 0; // Timer per la prossima dose di Adrenalina (3-5 min)
+        this.adrenTimerSeconds = 0; 
         this.timerInterval = null;
         this.isRunning = false;
 
@@ -27,15 +25,20 @@ class ResusProEngine {
             this.totalSeconds++;
             this.adrenTimerSeconds++;
 
-            // Countdown ciclo 2 minuti
             if (this.cycleSeconds > 0) {
                 this.cycleSeconds--;
+                // Negli ultimi 15 secondi del ciclo, sposta l'evidenziazione sullo step di analisi
+                if (this.cycleSeconds <= 15) {
+                    this.evidenziaStep('analisi');
+                } else {
+                    this.evidenziaStep('cpr');
+                }
             } else {
                 this.triggerAlert("⚠️ Fine ciclo 2 minuti: Controllare ritmo e polso!");
                 this.cycleSeconds = 120;
+                this.evidenziaStep('analisi');
             }
 
-            // Promemoria Adrenalina (ogni 4 minuti / 240 secondi)
             if (this.adrenTimerSeconds >= 240 && this.state.adrenalinaCount > 0) {
                 this.triggerAlert("🔔 È ora di valutare la seconda/successiva dose di Adrenalina 1 mg!");
             }
@@ -61,6 +64,7 @@ class ResusProEngine {
             amiodaroneTotal: 0,
             eventiLog: []
         };
+        this.evidenziaStep('cpr');
         this.registrataEvento("Reset della rianimazione avviato.");
         this.updateDisplay();
     }
@@ -68,19 +72,21 @@ class ResusProEngine {
     impostaRitmo(ritmo) {
         this.state.ritmo = ritmo;
         document.getElementById('ritmo-status').innerText = `RITMO: ${ritmo.toUpperCase()}`;
+        this.evidenziaStep('shock');
         this.registrataEvento(`Rilevato ritmo: ${ritmo}`);
     }
 
     registraShock() {
         this.state.shockCount++;
         this.cycleSeconds = 120; // Reset ciclo sui 2 min dopo lo shock
+        this.evidenziaStep('farmaci');
         this.registrataEvento(`⚡ Shock erogato #${this.state.shockCount}`);
         this.updateDisplay();
     }
 
     somministraAdrenalina() {
         this.state.adrenalinaCount++;
-        this.adrenTimerSeconds = 0; // Reset timer adrenalina
+        this.adrenTimerSeconds = 0;
         this.registrataEvento(`💊 Somministrata Adrenalina 1 mg (Tot: ${this.state.adrenalinaCount} mg)`);
         this.updateDisplay();
     }
@@ -89,6 +95,23 @@ class ResusProEngine {
         this.state.amiodaroneTotal += mg;
         this.registrataEvento(`💊 Somministrato Amiodarone ${mg} mg (Tot: ${this.state.amiodaroneTotal} mg)`);
         this.updateDisplay();
+    }
+
+    evidenziaStep(stepId) {
+        const steps = ['cpr', 'analisi', 'shock', 'farmaci'];
+        steps.forEach(s => {
+            const el = document.getElementById(`step-${s}`);
+            if (!el) return;
+            if (s === stepId) {
+                el.style.background = 'var(--primary)';
+                el.style.color = 'white';
+                el.style.borderColor = 'transparent';
+            } else {
+                el.style.background = 'var(--surface-hover)';
+                el.style.color = 'var(--text-muted)';
+                el.style.borderColor = 'var(--border)';
+            }
+        });
     }
 
     registrataEvento(desc) {
