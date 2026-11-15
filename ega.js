@@ -1,6 +1,3 @@
-/**
- * Motore di Analisi Emogasanalitica (EGA)
- */
 function calcolaEGA(input) {
     const { ph, paco2, hco3, na, cl, k, lat, pao2, fio2, usaK } = input;
     let reportLines = [];
@@ -21,8 +18,8 @@ function calcolaEGA(input) {
     if (primario.includes("Acidosi Metabolica") && !isNaN(paco2) && !isNaN(hco3)) {
         let paco2Attesa = (1.5 * hco3) + 8;
         let diff = paco2 - paco2Attesa;
-        let compenso = Math.abs(diff) <= 2 ? "Adeguato compenso respiratorio." : diff > 2 ? "Sovrapposta Acidosi Respiratoria." : "Sovrapposta Alcalosi Respiratoria.";
-        reportLines.push(`• Winter: PaCO2 attesa = ${paco2Attesa.toFixed(1)} mmHg (±2). Rilevata: ${paco2} mmHg. (${compenso})[span_28](start_span)[span_28](end_span)`);
+        let compenso = Math.abs(diff) <= 2 ? "Compenso respiratorio adeguato." : diff > 2 ? "Sovrapposta Acidosi Respiratoria." : "Sovrapposta Alcalosi Respiratoria.";
+        reportLines.push(`• Winter: PaCO2 attesa = ${paco2Attesa.toFixed(1)} mmHg (±2). Rilevata: ${paco2} mmHg. (${compenso})`);
     }
 
     if (!isNaN(na) && !isNaN(cl) && !isNaN(hco3)) {
